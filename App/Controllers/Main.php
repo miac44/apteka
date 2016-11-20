@@ -1,6 +1,5 @@
 <?php
-
-
+namespace App\Controllers;
 use App\View, App\Controller;
 class Main extends Controller
 {

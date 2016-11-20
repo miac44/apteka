@@ -14,11 +14,13 @@ class Drug extends Model
     public function search($search)
     {
         $db = \App\Db::instance();
-        $res = $db->execute(
+        $res = $db->query(
             'SELECT * FROM ' . self::TABLE
             . ' WHERE TOVAR LIKE %:search%',
+            __CLASS__,
             array(':search' => $search)
         );
         return $res;
     }
+
 }

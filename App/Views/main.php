@@ -14,7 +14,7 @@
 $('input[name=search]').typeahead({
         //источник данных
         source: function (query, process) {
-           return $.post('getdrug', {'name':query},
+           return $.post('ajax/search', {'name':query},
                  function (response) {
                       var data = new Array();
                       //преобразовываем данные из json в массив

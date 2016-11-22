@@ -48,7 +48,9 @@ class Drug extends Model
         foreach ($res as $v) {
             $result_word =$v->TOVNAME;
             foreach (\App\Config::instance()->bad_words as $word) {
-                $result_word =  str_replace($word, '', $result_word);
+                if (strpos($result_word, $word)>0) {
+                    $result_word = substr($result_word, 0, strpos($result_word, $word));
+                };
             }
             foreach (\App\Config::instance()->bad_regexp as $regexp) {
                 $result_word = preg_replace("/" . $regexp . "/i", "", $result_word);
@@ -57,7 +59,6 @@ class Drug extends Model
             if (!in_array($result_word, $result)){
                 $result[] = $result_word;
             }
-
         }
         return json_encode(array_unique($result), JSON_UNESCAPED_UNICODE);
 

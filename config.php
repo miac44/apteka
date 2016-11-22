@@ -33,6 +33,7 @@ $data['bad_words'] = array (
         'гран.'
 );
 $data['bad_regexp'] = array(
+    'р.\s?\d+',
     '\d+\s?мг',
     '\d+\s?г',
     '\d+\s?%',

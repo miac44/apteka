@@ -57,7 +57,7 @@ class Drug extends Model
                 };
             };
             foreach (\App\Config::instance()->bad_regexp as $regexp) {
-                $result_word = preg_replace("/(.+)" . $regexp . "/iU", "$1", $result_word);
+                $result_word = preg_replace("/^(.+)" . $regexp . "(.+)$/iU", "$1", $result_word);
             };
             $result_word = trim(preg_replace("/s+/"," ",$result_word));
             if (!in_array($result_word, $result)){

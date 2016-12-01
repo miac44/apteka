@@ -1,21 +1,13 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-</head>
-<body>
+<?php include_once('_header.php'); ?>
 
-<p class="text-center">
+<form class="form-inline text-center" action="/search" method="post">
+    <div class="form-group">
         <input class="typeahead text-center input-lg" type="text" data-provide="typeahead" size="70" placeholder="Введите название лекарства">
-</p>
+    </div>
+    <button type="submit" class="btn-lg btn-default">Искать</button>
+</form>
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="js/bootstrap3-typeahead.min.js"></script>
-
+<?php include_once('_js.php'); ?>
 <script type="text/javascript">
     $(document).ready(function() {
         $('input.typeahead').typeahead({
@@ -35,7 +27,5 @@
     });
 </script>
 
-</body>
-</html>
-
+<?php include_once('_footer.php'); ?>
 

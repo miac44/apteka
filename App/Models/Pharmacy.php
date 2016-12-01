@@ -1,15 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: root
- * Date: 01.12.2016
- * Time: 21:28
- */
-
 namespace App\Models;
+use App\Model;
 
-
-class Pharmacy
+class Pharmacy extends Model
 {
+    const TABLE = "apteki";
+
+    public $APTKOD;
+    public $APNAME;
+    public $ADRESS;
+    public $TIME;
+    public $PHONE;
+    public $INFO;
+
 
 }

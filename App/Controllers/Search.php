@@ -1,15 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: root
- * Date: 01.12.2016
- * Time: 21:43
- */
-
 namespace App\Controllers;
 
+use App\Controller;
 
-class Search
+class Search extends Controller
 {
+    protected function beforeAction()
+    {
+    }
+    protected function actionIndex()
+    {
+        $this->view->title = "Поиск по аптекам";
+        $this->view->display(__DIR__ . '/../Views/search.php');
+    }
 
 }

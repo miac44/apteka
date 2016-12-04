@@ -7,7 +7,7 @@ class Pharmacy extends Model
     const TABLE = "apteki";
 
     public $APTKOD;
-    public $APNAME;
+    public $APTNAME;
     public $ADRESS;
     public $TIME;
     public $PHONE;

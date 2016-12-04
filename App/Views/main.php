@@ -2,7 +2,7 @@
 
 <form class="form-inline text-center" action="/search" method="post">
     <div class="form-group">
-        <input class="typeahead text-center input-lg" type="text" data-provide="typeahead" size="70" placeholder="Введите название лекарства">
+        <input name="search" class="typeahead text-center input-lg" type="text" data-provide="typeahead" size="70" placeholder="Введите название лекарства">
     </div>
     <button type="submit" class="btn-lg btn-default">Искать</button>
 </form>

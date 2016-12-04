@@ -10,6 +10,5 @@ try {
 } catch (\App\Exceptions\RouteException $e){
 	echo "Ошибка роутинга - " . $e->getMessage();
 }
-
 $controller = new $route->controller;
 $controller->action($route->action);

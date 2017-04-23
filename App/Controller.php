@@ -7,14 +7,17 @@ abstract class Controller
 
     public function __construct()
     {
-        $this->view = new View();
+        $template_engine = '\\App\TemplateEngine\\' . \App\Config::instance()->template_engine;
+        $this->view = new $template_engine();
     }
-    public function action($action)
+
+    public function action($action, $args = NULL)
     {
         $methodName = 'action' . $action;
         $this->beforeAction();
-        return $this->$methodName();
+        return $this->$methodName($args);
     }
+
     public static function existsAction($action)
     {
         $methodName = 'action' . $action;

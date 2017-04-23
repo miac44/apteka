@@ -1,0 +1,14 @@
+* Для оптимизации картинок используем jpegoptim и optipng
+Эти программы вырезают мета-информацию
+* Обязательно добавить статистические роуты на будующее
+
+* ЧПУ
+Для nginx в конфиг добавляем
+location / {
+    try_files $uri $uri/ /index.php?$args;
+}
+Для apache в .htaccess
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [L,QSA]

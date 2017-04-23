@@ -1,8 +1,9 @@
 <?php
-// TODO вынести повторяющиеся строки
+
 namespace App;
 
 use \App\Exceptions\DBException;
+use \App\Traits\Singleton;
 
 class Db
 {
@@ -14,7 +15,7 @@ class Db
     protected function __construct()
     {
         try {
-            $this->dbh = new \PDO('mysql:host=' . \App\Config::instance()->db['host'] . ';dbname=' . \App\Config::instance()->db['dbname'], \App\Config::instance()->db['user'], \App\Config::instance()->db['pass']);
+            $this->dbh = new \PDO('mysql:host=' . \App\Config::instance()->db->host . ';dbname=' . \App\Config::instance()->db->dbname, \App\Config::instance()->db->user, \App\Config::instance()->db->password);
             $this->execute('SET NAMES UTF8');
         } catch (\PDOException $e){
             throw new DBException('Ошибка соединения с базой данных');
@@ -38,16 +39,6 @@ class Db
         $res = $sth->execute($substitutions);
         if (false !== $res) {
             return $sth->fetchAll(\PDO::FETCH_CLASS, $class);
-        }
-        return [];
-    }
-
-    public function queryRaw($sql, $substitutions = array())
-    {
-        $sth = $this->dbh->prepare($sql);
-        $res = $sth->execute($substitutions);
-        if (false !== $res) {
-            return $sth->fetchAll(\PDO::FETCH_ASSOC);
         }
         return [];
     }

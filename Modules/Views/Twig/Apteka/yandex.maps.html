@@ -20,7 +20,7 @@
 				pharmacyGeocoder{{ pharmacy.APTKOD }}.then(
 				    function (res) {
 					pharmacyGeoObjects.add(res.geoObjects);
-					pharmacyMap.setBounds(pharmacyGeoObjects.getBounds());
+					pharmacyMap.setBounds(pharmacyGeoObjects.getBounds(),{checkZoomRange:true, zoomMargin:100});
 				    },
 				    function (err) {
 				    }

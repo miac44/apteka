@@ -6,3 +6,4 @@ Public/google_*.html
 *.tmp.php
 Profiles/*
 !Profiles/Default/*
+*.sql

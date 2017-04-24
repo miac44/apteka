@@ -1,0 +1,35 @@
+<div id="YMapsID" style="height: 350px;"></div>
+
+<script type="text/javascript">
+    var pharmacyMap;
+    function init() {
+        pharmacyMap = new ymaps.Map("YMapsID", {
+            center: [57.7678, 40.9268],
+            zoom: 10
+        });
+        pharmacyMap.controls.add('mapTools');
+        pharmacyMap.controls.add('zoomControl');
+        pharmacyMap.controls.add('typeSelector');
+        var pharmacyGeocoder = ymaps.geocode("{{ pharmacy.ADRESS }}");
+
+        pharmacyGeocoder.then(
+            function (res) {
+                var pharmacyCoords = res.geoObjects.get(0).geometry.getCoordinates();
+                pharmacyMap.geoObjects.add(
+                    new ymaps.Placemark(
+                        pharmacyCoords,
+                        {iconContent: '{{ pharmacy.APTNAME }}'},
+                        {preset: 'twirl#redStretchyIcon'}
+                    )
+                );
+                pharmacyMap.setCenter(pharmacyCoords, 15);
+            },
+            function (err) {
+                alert('Ошибка');
+            }
+        );
+    }
+</script>
+
+<script src="https://api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU&onload=init" type="text/javascript"> </script>
+

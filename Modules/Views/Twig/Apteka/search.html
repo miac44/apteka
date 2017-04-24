@@ -13,7 +13,7 @@
 {% for drug in drugs %}
             <tr>
                 <td>
-                    <p><a href="/pharmacy/{{ drug.pharmacy.APTKOD }}">{{ drug.pharmacy.APTNAME }}</a></p>
+                    <p>{{ include ('Apteka/pharmacy.name.html') }}</p>
                     <p>Адрес: {{ drug.pharmacy.ADRESS }}</p>
                 </td>
                 <td>{{ drug.NOMNAME }}</td>

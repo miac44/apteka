@@ -1,20 +1,16 @@
 <div id="YMapsID" style="height: 350px;"></div>
-
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru-RU" type="text/javascript"> </script>
 <script type="text/javascript">
-    var pharmacyMap;
-    function init() {
-        pharmacyMap = new ymaps.Map("YMapsID", {
-            center: [57.7678, 40.9268],
-            zoom: 10
-        });
-        pharmacyMap.controls.add('mapTools');
-        pharmacyMap.controls.add('zoomControl');
-        pharmacyMap.controls.add('typeSelector');
+    ymaps.ready(init);
 
+    function init() {
+        var pharmacyMap = new ymaps.Map("YMapsID", {
+            center: [57.7678, 40.9268],
+            zoom: 10,
+	    controls: ['zoomControl', 'typeSelector']
+        });
 	var pharmacyGeoObjects = new ymaps.GeoObjectCollection(null, {
-		{# preset: "twirl#redStretchyIcon" #}
-preset: 'twirl#hospitalIcon'		
-		{#preset: 'islands#redMedicalIcon'#}
+		preset: 'islands#redMedicalIcon'
 	});
 
 	{% if pharmacies is defined %}
@@ -43,7 +39,8 @@ preset: 'twirl#hospitalIcon'
 		);
 	{% endif %}
    pharmacyMap.geoObjects.add(pharmacyGeoObjects);
+
 }
 </script>
 
-<script src="https://api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU&onload=init" type="text/javascript"> </script>
+

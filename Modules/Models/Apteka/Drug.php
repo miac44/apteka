@@ -38,4 +38,34 @@ class Drug extends Model
     ];
     const RELATIONS = [
     ];
+
+    public function prepare($res)
+    {
+        $result = array();
+        foreach ($res as $v) {
+            $result_word =$v->TOVNAME;
+
+            foreach (\App\Config::instance()->bad_words as $word) {
+                if (strpos($result_word, $word)>0) {
+                    $result_word = substr($result_word, 0, strpos($result_word, $word));
+                };
+            };
+            foreach (\App\Config::instance()->bad_regexp as $regexp) {
+                $result_word = preg_replace("/^(.+)" . $regexp . "(.+)$/iU", "$1", $result_word);
+            };
+            $result_word = trim(preg_replace("/s+/"," ",$result_word));
+            if (!in_array($result_word, $result)){
+                $result[] = $result_word;
+            };
+        }
+        return array_unique($result);
+    }
+
+    public function json_search($search = [])
+    {
+        $res = self::search($search);
+        $result = self::prepare($res);
+        return json_encode($result, JSON_UNESCAPED_UNICODE);
+    }
+
 }

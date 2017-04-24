@@ -10,7 +10,7 @@ class Ajax extends Controller
     }
     protected function actionSearch()
     {
-        $this->view->json_data = \App\Models\Drug::json_search($_REQUEST['search']);
+        $this->view->json_data = \App\Models\Drug::ajax_search($_REQUEST['search']);
         $this->view->display(__DIR__ . '/../Views/ajax.php');
     }
 }

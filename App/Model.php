@@ -157,4 +157,24 @@ abstract class Model
         return strtolower(preg_replace('#.+\\\#', '', static::class));
     }
 
+    public static function search($data = ['1' => '1'])
+    {
+        $db = Db::instance();
+        $sql = '
+            SELECT * FROM ' . static::TABLE . ' WHERE ';
+        $values = [];
+        foreach ($data as $k => $v) {
+            $values[':'.$k] = '%' . $v . '%';
+            $sql .= $k . ' LIKE :' . $k;
+            $sql .= ' AND ';
+        }
+        $sql = substr($sql, 0, -5);
+        $res = $db->query(
+            $sql,
+            static::class,
+            $values
+        );
+        return $res;
+    }
+
 }

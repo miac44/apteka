@@ -17,7 +17,7 @@ class Main extends Controller
 
     protected function actionIndex()
     {
-        $module = new \Modules\Controllers\Blog\Index();
+        $module = new \Modules\Controllers\Apteka\Index();
         $module->view = $this->view;
         return $module->action('Index');
     }

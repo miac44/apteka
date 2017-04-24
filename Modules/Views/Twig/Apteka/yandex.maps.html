@@ -10,8 +10,11 @@
         pharmacyMap.controls.add('mapTools');
         pharmacyMap.controls.add('zoomControl');
         pharmacyMap.controls.add('typeSelector');
-	var pharmacyGeoObjects = new ymaps.GeoObjectCollection({}, {
-		preset: "twirl#redStretchyIcon",
+
+	var pharmacyGeoObjects = new ymaps.GeoObjectCollection(null, {
+		{# preset: "twirl#redStretchyIcon" #}
+preset: 'twirl#hospitalIcon'		
+		{#preset: 'islands#redMedicalIcon'#}
 	});
 
 	{% if pharmacies is defined %}
@@ -44,4 +47,3 @@
 </script>
 
 <script src="https://api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU&onload=init" type="text/javascript"> </script>
-

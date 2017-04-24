@@ -3,7 +3,7 @@ $data['SITE_NAME'] = 'Аптечный поиск';
 $data['db'] = array (
   'host' => '127.0.0.1',
   'user' => 'root',
-  'pass' => '123456',
+  'pass' => '',
   'dbname' => 'apteka',
 );
 $data['dir'] = '';

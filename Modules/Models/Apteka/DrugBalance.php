@@ -20,4 +20,21 @@ class DrugBalance extends Model
     ];
     const RELATIONS = [
     ];
+
+    public function searchwithpharmacy($search)
+    {
+        $search = str_replace(' ', '%', $search);
+        $db = \App\Db::instance();
+        $res = $db->query(
+            'SELECT DrugBalance.*, Pharmacy.* FROM ' . self::TABLE
+            . ' LEFT JOIN Pharmacy ON DrugBalance.APTKOD=Pharmacy.APTKOD'
+            . ' WHERE DrugBalance.NOMNAME LIKE :search',
+            __CLASS__,
+            array('search' => '%' . $search . '%')
+        );
+        return $res;
+    }
+
+
+
 }

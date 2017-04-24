@@ -177,4 +177,12 @@ abstract class Model
         return $res;
     }
 
+    public static function extendedSearch($data = ['1' => '1'])
+    {
+        foreach ($data as $k=>$v) {
+            $data[$k] = str_replace(' ', '%', $v);
+        }
+        return self::search($data);
+    }
+
 }

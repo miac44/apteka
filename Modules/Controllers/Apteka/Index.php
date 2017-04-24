@@ -4,7 +4,7 @@ namespace Modules\Controllers\Apteka;
 
 use App\Config;
 use App\Controller;
-
+use \Modules\Models\Apteka;
 
 class Index extends \App\Controllers\Main
 {
@@ -19,10 +19,23 @@ class Index extends \App\Controllers\Main
 	    $this->view->content = $this->view->render('Apteka/search_form');
         $this->view->display('index');
     }
-    protected function actionSearch()
+    protected function actionAjaxSearch()
     {
         $this->view->json_data = \Modules\Models\Apteka\Drug::json_search(['TOVNAME'=>$_REQUEST['search']]);
         $this->view->display('Apteka/ajax');
     }
+    protected function actionSearch()
+    {
+        $this->view->search = $_REQUEST['search'];
+        $this->view->drugs = \Modules\Models\Apteka\DrugBalance::searchwithpharmacy($_REQUEST['search']);
+        $this->view->pharmacy = \Modules\Models\Apteka\Pharmacy::findAll();
+        if (empty($this->view->drugs)){
+            $this->view->content = $this->view->render('Apteka/emptysearch');
+        } else {
+            $this->view->content = $this->view->render('Apteka/search');
+        };
+        $this->view->display('index');
+    }
+
 
 }

@@ -4,8 +4,9 @@ namespace App;
 
 abstract class Model
 {
-
     const TABLE = '';
+    const COLUMNS = [];
+    const RELATIONS = [];
 
     public static function findAll()
     {
@@ -15,7 +16,6 @@ abstract class Model
             static::class
         );
     }
-
 
     public static function findById($id)
     {
@@ -29,10 +29,34 @@ abstract class Model
         return $res;
     }
 
+    public static function findByUniqueField($linkname, $id)
+    {
+        $db = Db::instance();
+        $res = $db->query_one_element(
+            'SELECT * FROM ' . static::TABLE
+            . ' WHERE ' . $linkname. '=:id',
+            static::class,
+            array('id' => $id)
+        );
+        return $res;
+    }
+    public static function findByLinkedId($linkname, $id)
+    {
+        $db = Db::instance();
+        $res = $db->query(
+            'SELECT * FROM ' . static::TABLE
+            . ' WHERE ' . $linkname. '=:id',
+            static::class,
+            array('id' => $id)
+        );
+        return $res;
+    }
+
     public function isNew()
     {
         return empty($this->id);
     }
+
     public function insert()
     {
         if (!$this->isNew()) {
@@ -49,9 +73,9 @@ abstract class Model
         }
         $sql = '
             INSERT INTO ' . static::TABLE . '
-            (' . implode(',', $columns) . ')
+            (' . implode(',', $columns) . ', created_at)
             VALUES
-            (' . implode(',', array_keys($values)) . ')
+            (' . implode(',', array_keys($values)) . ', NOW())
                     ';
         $db = Db::instance();
         $db->execute($sql, $values);
@@ -66,7 +90,6 @@ abstract class Model
         $values = [];
         $sql = '
             UPDATE ' . static::TABLE . ' SET ';
-
         foreach ($this as $k => $v) {
             $values[':'.$k] = $v;
             if ($k == 'id'){
@@ -111,11 +134,68 @@ abstract class Model
             . ' LIMIT 0,' . $count,
             static::class
         );
-
         if (count($res) == 0) {
             return [];
         }
         return $res;
+    }
+
+    public function __get($k)
+    {
+        if (key_exists($k, static::RELATIONS)){
+            $field = static::RELATIONS[$k]['field'] ?? $k . '_id';
+            if (isset($this->{$field})){
+                if (static::RELATIONS[$k]['type']=='has_one'){
+                    return static::RELATIONS[$k]['model']::findByUniqueField($field, $this->{$field});
+                }
+            };
+            $field = static::RELATIONS[$k]['field'] ?? $this->getLinkedId() . "_id";
+            if (isset($this->{$field})){
+                if (static::RELATIONS[$k]['type']=='has_many'){
+                    return static::RELATIONS[$k]['model']::findByLinkedId($field, $this->{$field} );
+                }
+            };
+            return false;
+        }
+        return NULL;
+    }
+
+    public function __isset($k)
+    {
+        return key_exists($k, static::RELATIONS);
+    }
+
+    public function getLinkedId()
+    {
+        return strtolower(preg_replace('#.+\\\#', '', static::class));
+    }
+
+    public static function search($data = ['1' => '1'])
+    {
+        $db = Db::instance();
+        $sql = '
+            SELECT * FROM ' . static::TABLE . ' WHERE ';
+        $values = [];
+        foreach ($data as $k => $v) {
+            $values[':'.$k] = '%' . $v . '%';
+            $sql .= $k . ' LIKE :' . $k;
+            $sql .= ' AND ';
+        }
+        $sql = substr($sql, 0, -5);
+        $res = $db->query(
+            $sql,
+            static::class,
+            $values
+        );
+        return $res;
+    }
+
+    public static function extendedSearch($data = ['1' => '1'])
+    {
+        foreach ($data as $k=>$v) {
+            $data[$k] = str_replace(' ', '%', $v);
+        }
+        return self::search($data);
     }
 
 }

@@ -1,2 +1,10 @@
-config.php
+import
 .idea
+vendor
+Public/yandex_*.html
+Public/google_*.html
+*.tmp.php
+Profiles/*
+!Profiles/Default/*
+*.sql
+

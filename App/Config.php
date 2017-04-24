@@ -1,27 +1,39 @@
 <?php
 namespace App;
 
+use App\Traits\Singleton;
+
 class Config
 {
 
     use Singleton;
-    use GetterSetter;
+    
     private $config_file;
 
-    public function __construct($config_file = 'config')
+    public function __construct()
     {
-        $this->config_file = $config_file . '.php';
-        include_once $this->config_file;
-        $this->data = $data;
+        $this->config_file = '../Profiles/' . ucfirst(PROFILE) . '/main.php';
+        $this->data = require $this->config_file;
+    }
+
+    public function __get($k)
+    {
+        if (is_array($this->data[$k])){
+            return new ConfigItem($this->data[$k]);
+        } else {
+            return $this->data[$k];
+        }
     }
 
     public function save()
     {
-        $config_string = "<?php\r\n";
-        foreach ($this->data as $k=>$v){
-            $config_string .= "\$data['" . $k . "'] = " . var_export($v, TRUE) . ";\r\n";
-        }
-        return file_put_contents($this->config_file, $config_string);
+        $config_string = var_export($this->data, true);
+        $pattern = '/array\s*\((\s*\'.+\'\s*=>\s*\'.*?\'\s*)\)/ims';
+        do {
+            $tmp = $config_string;
+            $config_string = preg_replace($pattern, '[$1]', $tmp);
+        } while ($tmp!=$config_string);
+        return file_put_contents($this->config_file, "<?php\r\n" . 'return ' . $config_string . ';');
     }
 
 }

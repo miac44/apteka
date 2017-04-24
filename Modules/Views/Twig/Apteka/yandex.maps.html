@@ -10,7 +10,7 @@
         pharmacyMap.controls.add('mapTools');
         pharmacyMap.controls.add('zoomControl');
         pharmacyMap.controls.add('typeSelector');
-        var pharmacyGeocoder = ymaps.geocode("{{ pharmacy.ADRESS }}");
+        var pharmacyGeocoder = ymaps.geocode("Костромская область, {{ pharmacy.ADRESS }}");
 
         pharmacyGeocoder.then(
             function (res) {

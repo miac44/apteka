@@ -7,4 +7,4 @@ Public/google_*.html
 Profiles/*
 !Profiles/Default/*
 *.sql
-
+Cache/*

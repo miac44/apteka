@@ -15,5 +15,6 @@ class Pharmacy extends Model
        'INFO'   => ['type'=>'string'],
     ];
     const RELATIONS = [
+        'drugs'=>['type'=>'has_many','model'=>'Modules\Models\Apteka\DrugBalance', 'field'=>'APTKOD'],
     ];
 }

@@ -29,6 +29,17 @@ abstract class Model
         return $res;
     }
 
+    public static function findByUniqueField($linkname, $id)
+    {
+        $db = Db::instance();
+        $res = $db->query_one_element(
+            'SELECT * FROM ' . static::TABLE
+            . ' WHERE ' . $linkname. '=:id',
+            static::class,
+            array('id' => $id)
+        );
+        return $res;
+    }
     public static function findByLinkedId($linkname, $id)
     {
         $db = Db::instance();
@@ -132,15 +143,17 @@ abstract class Model
     public function __get($k)
     {
         if (key_exists($k, static::RELATIONS)){
-            if (isset($this->{$k . "_id"})){
+            $field = static::RELATIONS[$k]['field'] ?? $k . '_id';
+            if (isset($this->{$field})){
                 if (static::RELATIONS[$k]['type']=='has_one'){
-                    return static::RELATIONS[$k]['model']::findById($this->{$k . "_id"});
-                } 
+                    return static::RELATIONS[$k]['model']::findByUniqueField($field, $this->{$field});
+                }
             };
-            if (isset($this->id)){
+            $field = static::RELATIONS[$k]['field'] ?? $this->getLinkedId() . "_id";
+            if (isset($this->{$field})){
                 if (static::RELATIONS[$k]['type']=='has_many'){
-                    return static::RELATIONS[$k]['model']::findByLinkedId($this->getLinkedId() . "_id", $this->id );
-                } 
+                    return static::RELATIONS[$k]['model']::findByLinkedId($field, $this->{$field} );
+                }
             };
             return false;
         }

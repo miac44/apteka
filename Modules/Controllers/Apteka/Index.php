@@ -9,26 +9,15 @@ use \Modules\Models\Apteka;
 class Index extends \App\Controllers\Main
 {
 
-    protected function beforeAction()
-    {
-        $this->view->site = Config::instance()->site;
-        $this->view->addTemplateDir(ROOT_DIR . '/Modules/Views/' . Config::instance()->template_engine);
-    }
     protected function actionIndex()
     {
 	    $this->view->content = $this->view->render('Apteka/search_form');
         $this->view->display('index');
     }
-    protected function actionAjaxSearch()
-    {
-        $this->view->json_data = \Modules\Models\Apteka\Drug::json_search(['TOVNAME'=>$_REQUEST['search']]);
-        $this->view->display('Apteka/ajax');
-    }
     protected function actionSearch()
     {
         $this->view->search = $_REQUEST['search'];
-        $this->view->drugs = \Modules\Models\Apteka\DrugBalance::searchwithpharmacy($_REQUEST['search']);
-        $this->view->pharmacy = \Modules\Models\Apteka\Pharmacy::findAll();
+        $this->view->drugs = \Modules\Models\Apteka\DrugBalance::extendedSearch(['NOMNAME'=>$_REQUEST['search']]);
         if (empty($this->view->drugs)){
             $this->view->content = $this->view->render('Apteka/emptysearch');
         } else {
@@ -36,6 +25,17 @@ class Index extends \App\Controllers\Main
         };
         $this->view->display('index');
     }
+    protected function actionAjaxSearch()
+    {
+        $this->view->json_data = \Modules\Models\Apteka\Drug::json_search(['TOVNAME'=>$_REQUEST['search']]);
+        $this->view->display('Apteka/ajax');
+    }
 
+    protected function actionPharmacy($data)
+    {
+        $this->view->pharmacy = \Modules\Models\Apteka\Pharmacy::findByUniqueField('APTKOD', $data['APTKOD']);
+        $this->view->content = $this->view->render('Apteka/pharmacy');
+        $this->view->display('index');
+    }
 
 }

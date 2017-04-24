@@ -11,7 +11,8 @@ class Index extends \App\Controllers\Main
 
     protected function actionIndex()
     {
-	    $this->view->content = $this->view->render('Apteka/search_form');
+        $this->view->pharmacies = \Modules\Models\Apteka\Pharmacy::findAll();
+	$this->view->content = $this->view->render('Apteka/search_form');
         $this->view->display('index');
     }
     protected function actionSearch()

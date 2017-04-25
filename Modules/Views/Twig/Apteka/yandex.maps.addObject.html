@@ -1,3 +1,14 @@
+
+				{% if pharmacy.coords == true %}
+				        var ourPharmacy = new ymaps.Placemark([{{ pharmacy.coords.latitude }}, {{ pharmacy.coords.longitude }}]);
+					ourPharmacy.properties.set({
+				            balloonContentHeader: '{{ pharmacy.APTNAME }}',
+				            balloonContentBody: '{{ include ("Apteka/yandex.maps.balloon.html") }}',
+			        	    balloonContentFooter: '{{ include ("Apteka/pharmacy.link.html") }}',
+				            hintContent: '{{ pharmacy.APTNAME }}'
+					});
+					pharmacyGeoObjects.add(ourPharmacy);
+				{% else %}
 			        var pharmacyGeocoder{{ pharmacy.APTKOD }} = ymaps.geocode('Костромская область, {{ pharmacy.ADRESS }}', {results:1});
 				pharmacyGeocoder{{ pharmacy.APTKOD }}.then(
 				    function (res) {
@@ -14,3 +25,5 @@
 				    function (err) {
 				    }
 				);
+				{% endif %}
+

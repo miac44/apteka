@@ -11,10 +11,12 @@
         </thead>
         <tbody>
 {% for drug in drugs %}
+{% set pharmacy = drug.pharmacy %}
             <tr>
                 <td>
-                    <p>{{ include ('Apteka/pharmacy.name.html') }}</p>
-                    <p>Адрес: {{ drug.pharmacy.ADRESS }}</p>
+                    <p>{{ pharmacy.APTNAME}}</p>
+                    <p>Адрес: {{ pharmacy.ADRESS }}</p>
+                    <p>{{ include ('Apteka/pharmacy.link.html') }}</p>
                 </td>
                 <td>{{ drug.NOMNAME }}</td>
                 <td>{{ drug.KOL }}</td>

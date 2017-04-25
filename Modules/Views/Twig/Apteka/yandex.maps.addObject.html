@@ -1,0 +1,16 @@
+			        var pharmacyGeocoder{{ pharmacy.APTKOD }} = ymaps.geocode('Костромская область, {{ pharmacy.ADRESS }}', {results:1});
+				pharmacyGeocoder{{ pharmacy.APTKOD }}.then(
+				    function (res) {
+					var ourPharmacy = res.geoObjects.get(0);
+					ourPharmacy.properties.set({
+				            balloonContentHeader: '{{ pharmacy.APTNAME }}',
+				            balloonContentBody: '{{ include ("Apteka/yandex.maps.balloon.html") }}',
+			        	    balloonContentFooter: '{{ include ("Apteka/pharmacy.link.html") }}',
+				            hintContent: '{{ pharmacy.APTNAME }}'
+					});
+					pharmacyGeoObjects.add(ourPharmacy);
+					pharmacyMap.setBounds(pharmacyGeoObjects.getBounds(),{checkZoomRange:true, zoomMargin:100});
+				    },
+				    function (err) {
+				    }
+				);

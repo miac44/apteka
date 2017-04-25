@@ -16,30 +16,13 @@
 	{% if pharmacies is defined %}
 		{% if pharmacies is iterable %}
 			{% for pharmacy in pharmacies %}
-			        var pharmacyGeocoder{{ pharmacy.APTKOD }} = ymaps.geocode("Костромская область, {{ pharmacy.ADRESS }}", {results:1});
-				pharmacyGeocoder{{ pharmacy.APTKOD }}.then(
-				    function (res) {
-					pharmacyGeoObjects.add(res.geoObjects);
-					pharmacyMap.setBounds(pharmacyGeoObjects.getBounds(),{checkZoomRange:true, zoomMargin:100});
-				    },
-				    function (err) {
-				    }
-				);
+				{{ include('Apteka/yandex.maps.addObject.html') }}
 			{% endfor %}
 		{% endif %}
 	{% elseif pharmacy is defined %}
-	        var pharmacyGeocoder{{ pharmacy.APTKOD }} = ymaps.geocode("Костромская область, {{ pharmacy.ADRESS }}", {results:1});
-		pharmacyGeocoder{{ pharmacy.APTKOD }}.then(
-		    function (res) {
-			pharmacyGeoObjects.add(res.geoObjects);
-			pharmacyMap.setBounds(pharmacyGeoObjects.getBounds(),{checkZoomRange:true, zoomMargin:100});
-		    },
-		    function (err) {
-		    }
-		);
+				{{ include('Apteka/yandex.maps.addObject.html') }}
 	{% endif %}
-   pharmacyMap.geoObjects.add(pharmacyGeoObjects);
-
+	pharmacyMap.geoObjects.add(pharmacyGeoObjects);
 }
 </script>
 

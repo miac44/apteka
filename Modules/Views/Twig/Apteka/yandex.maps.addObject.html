@@ -1,29 +1,12 @@
+var coords = new Array();
+{% if pharmacy.coords == true %}
+coords = [{{ pharmacy.coords.latitude }},{{ pharmacy.coords.longitude }}];
+{{ include('Apteka/yandex.maps.object.properties.hmtl') }}
+{% else %}
+ymaps.geocode('Костромская область, {{ pharmacy.ADRESS }}', {results:1}).then(function (res) {
+    var coords = res.geoObjects.get(0).geometry.getCoordinates();
+    {{ include('Apteka/yandex.maps.object.properties.hmtl') }}
+});
+{% endif %}
 
-				{% if pharmacy.coords == true %}
-				        var ourPharmacy = new ymaps.Placemark([{{ pharmacy.coords.latitude }}, {{ pharmacy.coords.longitude }}]);
-					ourPharmacy.properties.set({
-				            balloonContentHeader: '{{ pharmacy.APTNAME }}',
-				            balloonContentBody: '{{ include ("Apteka/yandex.maps.balloon.html") }}',
-			        	    balloonContentFooter: '{{ include ("Apteka/pharmacy.link.html") }}',
-				            hintContent: '{{ pharmacy.APTNAME }}'
-					});
-					pharmacyGeoObjects.add(ourPharmacy);
-				{% else %}
-			        var pharmacyGeocoder{{ pharmacy.APTKOD }} = ymaps.geocode('Костромская область, {{ pharmacy.ADRESS }}', {results:1});
-				pharmacyGeocoder{{ pharmacy.APTKOD }}.then(
-				    function (res) {
-					var ourPharmacy = res.geoObjects.get(0);
-					ourPharmacy.properties.set({
-				            balloonContentHeader: '{{ pharmacy.APTNAME }}',
-				            balloonContentBody: '{{ include ("Apteka/yandex.maps.balloon.html") }}',
-			        	    balloonContentFooter: '{{ include ("Apteka/pharmacy.link.html") }}',
-				            hintContent: '{{ pharmacy.APTNAME }}'
-					});
-					pharmacyGeoObjects.add(ourPharmacy);
-					pharmacyMap.setBounds(pharmacyGeoObjects.getBounds(),{checkZoomRange:true, zoomMargin:100});
-				    },
-				    function (err) {
-				    }
-				);
-				{% endif %}
 

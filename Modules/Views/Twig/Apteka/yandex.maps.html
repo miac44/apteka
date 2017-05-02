@@ -1,29 +1,30 @@
-<div id="YMapsID" style="height: 350px;"></div>
 <script src="https://api-maps.yandex.ru/2.1/?lang=ru-RU" type="text/javascript"> </script>
+<div id="YMapsID" style="height: 600px; width: 100%"></div>
 <script type="text/javascript">
     ymaps.ready(init);
-
     function init() {
         var pharmacyMap = new ymaps.Map("YMapsID", {
             center: [57.7678, 40.9268],
             zoom: 10,
-	    controls: ['zoomControl', 'typeSelector']
+	        controls: ['zoomControl', 'typeSelector']
         });
-	var pharmacyGeoObjects = new ymaps.GeoObjectCollection(null, {
-		preset: 'islands#redMedicalIcon'
-	});
+	    var pharmacyGeoObjects = new ymaps.GeoObjectCollection({}, {
+		    preset: 'islands#redMedicalIcon'
+	    });
 
 	{% if pharmacies is defined %}
 		{% if pharmacies is iterable %}
 			{% for pharmacy in pharmacies %}
-				{{ include('Apteka/yandex.maps.addObject.html') }}
+{{ include('Apteka/yandex.maps.addObject.html') }}
 			{% endfor %}
 		{% endif %}
 	{% elseif pharmacy is defined %}
-				{{ include('Apteka/yandex.maps.addObject.html') }}
+{{ include('Apteka/yandex.maps.addObject.html') }}
 	{% endif %}
-	pharmacyMap.geoObjects.add(pharmacyGeoObjects);
-}
+	    pharmacyMap.geoObjects.add(pharmacyGeoObjects);
+	    pharmacyMap.setBounds(pharmacyGeoObjects.getBounds(),{checkZoomRange: true});
+    }
+
 </script>
 
 

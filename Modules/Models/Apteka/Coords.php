@@ -12,6 +12,6 @@ class Coords extends Model
        'longitude'   => ['type'=>'string']
     ];
     const RELATIONS = [
-        'pharmacy'=>['type'=>'has_one','model'=>'Modules\Models\Apteka\Pharmacy', 'field'=>'APTKOD'],
+        'pharmacy'=>['type'=>'has_one','model'=>'Modules\Models\Apteka\Pharmacy', 'id'=>'APTKOD', 'connected_id'=>'APTKOD'],
     ];
 }

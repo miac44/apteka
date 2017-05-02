@@ -59,4 +59,14 @@ class Db
         return $this->dbh->lastInsertId();
     }
 
+    public function count($table)
+    {
+        $sql = 'SELECT COUNT(*) as count FROM ' . $table;
+        $sth = $this->dbh->prepare($sql);
+        $res = $sth->execute();
+        if (false !== $res) {
+            return $sth->fetchColumn();
+        }
+        return null;
+    }
 }

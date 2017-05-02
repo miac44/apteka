@@ -39,4 +39,11 @@ class Index extends \App\Controllers\Main
         $this->view->display('index');
     }
 
+    protected function actionDrugsByPharmacy($data)
+    {
+        $this->view->drugs = \Modules\Models\Apteka\DrugBalance::findByLinkedId('APTKOD', $data['APTKOD']);
+        $this->view->content = $this->view->render('Apteka/pharmacy.drugs');
+        $this->view->display('index');
+    }
+
 }

@@ -4,4 +4,5 @@
 <h2>{{ pharmacy.TIME }}</h2>
 <h2>{{ pharmacy.INFO }}</h2>
 {{ include('Apteka/yandex.maps.html') }}
+{% set drugs = pharmacy.drugs %}
 {{ include('Apteka/pharmacy.drugs.html') }}

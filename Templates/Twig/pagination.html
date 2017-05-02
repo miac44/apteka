@@ -1,0 +1,9 @@
+<div class="text-center">
+    <ul id="pagination">
+        {% if pagination.current != 1 %}<li class="pagination_item"><a href="{{ pagination.url }}/{{ pagination.current-1 }}">Prev</a>{% endif %}</li>
+        {% for page in 1..pagination.count %}
+        <li class="pagination_item">{% if pagination.current != page %}<a href="{{ pagination.url }}/{{ page }}">{{ page }}</a>{% else %}{{ page }}{% endif %}</li>
+        {% endfor %}
+        {% if pagination.current != pagination.count %}<li class="pagination_item"><a href="{{ pagination.url }}/{{ pagination.current+1 }}">Next</a>{% endif %}</li>
+    </ul>
+</div>

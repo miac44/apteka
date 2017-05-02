@@ -1,3 +1,27 @@
 body {
     font-size: 12pt;
+    padding-top: 70px;
+}
+
+ul#pagination {
+    margin: 0;
+    padding: 4px;
+}
+
+ul#pagination li.pagination_item {
+    display: inline;
+    margin-right: 5px;
+    padding: 3px;
+}
+
+.maincolor {
+    background-color: #9c3;
+/*	original color #8bc53f*/
+    color: #fff !important;
+}
+
+.activemaincolor {
+	background-color: #9c6;
+/*	original color  #a2d165*/
+	color: #fff;
 }

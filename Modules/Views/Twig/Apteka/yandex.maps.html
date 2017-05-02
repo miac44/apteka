@@ -15,14 +15,14 @@
 	{% if pharmacies is defined %}
 		{% if pharmacies is iterable %}
 			{% for pharmacy in pharmacies %}
-{{ include('Apteka/yandex.maps.addObject.html') }}
+{{ include('Apteka/YandexMaps/addObject.html') }}
 			{% endfor %}
 		{% endif %}
 	{% elseif pharmacy is defined %}
-{{ include('Apteka/yandex.maps.addObject.html') }}
+{{ include('Apteka/YandexMaps/addObject.html') }}
 	{% endif %}
 	    pharmacyMap.geoObjects.add(pharmacyGeoObjects);
-	    pharmacyMap.setBounds(pharmacyGeoObjects.getBounds(),{checkZoomRange: true});
+
     }
 
 </script>

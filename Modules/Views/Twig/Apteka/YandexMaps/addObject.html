@@ -1,0 +1,12 @@
+ymaps.geocode('Костромская область, {{ pharmacy.ADRESS }}', {results:1}).then(function (res) {
+    var coords = new Array();
+    {% if pharmacy.coords == true %}
+        coords = [{{ pharmacy.coords.latitude }},{{ pharmacy.coords.longitude }}];
+    {% else %}
+        coords = res.geoObjects.get(0).geometry.getCoordinates();
+    {% endif %}
+    {{ include('Apteka/YandexMaps/object.properties.hmtl') }}
+});
+
+
+

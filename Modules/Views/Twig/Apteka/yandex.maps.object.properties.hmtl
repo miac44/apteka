@@ -1,9 +1,0 @@
-var ourPharmacy{{ pharmacy.APTKOD}} = new ymaps.Placemark(coords);
-ourPharmacy{{ pharmacy.APTKOD}}.properties.set({
-		balloonContentHeader: '{{ pharmacy.APTNAME }}',
-		balloonContentBody: '{{ include ("Apteka/yandex.maps.balloon.html") }}',
-		balloonContentFooter: '{{ include ("Apteka/pharmacy.link.html") }}',
-		hintContent: '{{ pharmacy.APTNAME }}'
-});
-pharmacyGeoObjects.add(ourPharmacy{{ pharmacy.APTKOD}});
-{#pharmacyGeoObjects.setBounds(ourPharmacy.getBounds(),{checkZoomRange: true});#}

@@ -1,0 +1,18 @@
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Наименование</th>
+        <th>Количество</th>
+        <th>Цена</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for drug in pharmacy.drugs %}
+    <tr>
+        <td>{{ drug.NOMNAME }}</td>
+        <td>{{ drug.KOL }}</td>
+        <td>{{ drug.PRICE }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

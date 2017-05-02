@@ -4,21 +4,4 @@
 <h2>{{ pharmacy.TIME }}</h2>
 <h2>{{ pharmacy.INFO }}</h2>
 {{ include('Apteka/yandex.maps.html') }}
-<table class="table table-hover">
-    <thead>
-    <tr>
-        <th>Наименование</th>
-        <th>Количество</th>
-        <th>Цена</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for drug in pharmacy.drugs %}
-    <tr>
-        <td>{{ drug.NOMNAME }}</td>
-        <td>{{ drug.KOL }}</td>
-        <td>{{ drug.PRICE }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{{ include('Apteka/pharmacy.drugs.html') }}

@@ -1,10 +1,10 @@
-<form class="form-inline text-center" action="/search" method="post">
-    <div class="form-group">
-        <input name="search" class="typeahead text-center input-lg" type="text" data-provide="typeahead" size="70" placeholder="Введите название лекарства" autocomplete="off">
-    </div>
-    <button type="submit" class="btn-lg btn-default">Искать</button>
-</form>
-
+<div class="container-fluid">
+    <form class="form-inline" action="/search" method="post">
+        <div class="form-group col-xs-12">
+            <input name="search" class="typeahead text-center input-lg col-xs-11" type="text" data-provide="typeahead" placeholder="Введите название лекарства" autocomplete="off">
+            <button type="submit" class="btn-lg btn-default col-xs-1">Искать</button>
+        </div>
+    </form>
 <script type="text/javascript">
     $(document).ready(function() {
         $('input.typeahead').typeahead({
@@ -23,5 +23,6 @@
         });
     });
 </script>
+</div>
 <br />
 {{ include('Apteka/yandex.maps.html') }}

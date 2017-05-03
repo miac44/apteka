@@ -1,6 +1,6 @@
 body {
     font-size: 12pt;
-    padding-top: 70px;
+    padding-top: 80px;
 }
 
 ul#pagination {
@@ -24,4 +24,42 @@ ul#pagination li.pagination_item {
 	background-color: #9c6;
 /*	original color  #a2d165*/
 	color: #fff;
+}
+
+#header {
+    background-color: #9c3;
+/*  original color #8bc53f*/
+    color: #fff;
+}
+
+#header a {
+    color: #fff;
+}
+
+div.navbar-header {
+    height: 62px;
+}
+
+#sitetitle {
+    font-size: 175%;
+    padding: 0px;
+    margin: 0px;
+}
+
+#siteslogan {
+    font-size: 75%;    
+    padding: 0px;
+    margin: 0px;
+}
+
+#imglogo {
+    padding: 10px;
+}
+
+ul.navbar-right li a {
+    font-size: 150%;
+}
+
+.menuitem {
+    margin-left: 15px;
 }

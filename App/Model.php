@@ -38,6 +38,7 @@ abstract class Model
             static::class,
             array('id' => $id)
         );
+
         return $res;
     }
     public static function findByLinkedId($linkname, $id)
@@ -142,17 +143,25 @@ abstract class Model
 
     public function __get($k)
     {
+        /*
+         * TODO переписать findByUniqueField и findByLinkedId под search
+         */
+        if ($k == "count"){
+            return self::count();
+        }
         if (key_exists($k, static::RELATIONS)){
-            $field = static::RELATIONS[$k]['field'] ?? $k . '_id';
-            if (isset($this->{$field})){
+            $connected_id = static::RELATIONS[$k]['connected_id'] ?? $k . '_id';
+            $id = static::RELATIONS[$k]['id'] ?? 'id';
+            if (isset($this->{$connected_id})){
                 if (static::RELATIONS[$k]['type']=='has_one'){
-                    return static::RELATIONS[$k]['model']::findByUniqueField($field, $this->{$field});
+                    return static::RELATIONS[$k]['model']::findByUniqueField($id, $this->{$connected_id});
                 }
             };
-            $field = static::RELATIONS[$k]['field'] ?? $this->getLinkedId() . "_id";
-            if (isset($this->{$field})){
+            $connected_id = static::RELATIONS[$k]['connected_id'] ?? $this->getLinkedId() . '_id';
+            $id = static::RELATIONS[$k]['id'] ?? 'id';
+            if (isset($this->{$id})){
                 if (static::RELATIONS[$k]['type']=='has_many'){
-                    return static::RELATIONS[$k]['model']::findByLinkedId($field, $this->{$field} );
+                    return static::RELATIONS[$k]['model']::findByLinkedId($connected_id, $this->{$id} );
                 }
             };
             return false;
@@ -170,18 +179,24 @@ abstract class Model
         return strtolower(preg_replace('#.+\\\#', '', static::class));
     }
 
-    public static function search($data = ['1' => '1'])
+    public static function search($data = ['1' => '1'], int $start = 0, int $limit = 0)
     {
         $db = Db::instance();
         $sql = '
-            SELECT * FROM ' . static::TABLE . ' WHERE ';
-        $values = [];
-        foreach ($data as $k => $v) {
-            $values[':'.$k] = '%' . $v . '%';
-            $sql .= $k . ' LIKE :' . $k;
-            $sql .= ' AND ';
+            SELECT * FROM ' . static::TABLE;
+        if (!is_null($data)){
+            $sql .=  ' WHERE ';
+            $values = [];
+            foreach ($data as $k => $v) {
+                $values[':'.$k] = '%' . $v . '%';
+                $sql .= $k . ' LIKE :' . $k;
+                $sql .= ' AND ';
+            }
+            $sql = substr($sql, 0, -5);
+        };
+        if ($limit>0){
+            $sql .= ' LIMIT ' . $start . ',' . $limit;
         }
-        $sql = substr($sql, 0, -5);
         $res = $db->query(
             $sql,
             static::class,
@@ -198,4 +213,15 @@ abstract class Model
         return self::search($data);
     }
 
+    public static function count()
+    {
+        $db = Db::instance();
+        return (int)$db->count(static::TABLE);
+    }
+ 
+    public static function page($data = ['1' => '1'], int $page=1, int $record_per_page=5)
+    {
+        $start_record = ($page-1)*$record_per_page;
+        return self::search($data, $start_record, $record_per_page);
+    }
 }

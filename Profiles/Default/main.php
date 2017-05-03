@@ -29,8 +29,8 @@ return array (
             'count_on_start_page' => 3,
         ),
     'template_engine' => 'Twig',
-    'cache_dir' => '/path/to/cache',
-    'template_dir' => '/path/to/main/template',
+    'cache_dir' => '/path/to/cache/from/root',
+    'template_dir' => '/path/to/main/template/from/root',
     'date_format' => 'd.m.Y H:i',
   'routes' =>
   array (

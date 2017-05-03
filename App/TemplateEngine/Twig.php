@@ -10,9 +10,9 @@ class Twig
 
     public function __construct()
     {
-        $this->loader = new \Twig_Loader_Filesystem(Config::instance()->template_dir . '/Twig');
+        $this->loader = new \Twig_Loader_Filesystem(ROOT_DIR . Config::instance()->template_dir . '/Twig');
         $this->twig = new \Twig_Environment($this->loader, [
-            'cache' => Config::instance()->cache_dir . '/Twig',
+            'cache' => ROOT_DIR . Config::instance()->cache_dir . '/Twig',
             'auto_reload' => true,
             'strict_variables' => true,
             'debug' => true,

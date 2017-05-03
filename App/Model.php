@@ -224,4 +224,35 @@ abstract class Model
         $start_record = ($page-1)*$record_per_page;
         return self::search($data, $start_record, $record_per_page);
     }
+
+    public static function findAllWhere($data = [], $substitution = [])
+    {
+        $sql = 'SELECT * FROM ' . static::TABLE;
+        if (isset($data['where'])){
+            $sql .= ' WHERE ';
+            foreach ($data['where'] as $v){
+                $sql .= $v . ' AND ';
+            };
+            $sql = substr($sql, 0, -5);
+        };
+        if (isset($data['order'])){
+            $sql .= ' ORDER BY ';
+            foreach ($data['order'] as $v){
+                $sql .= $v . ',';
+            };
+            $sql = substr($sql, 0, -1);
+        };
+        $limit = '';
+        if (isset($data['count'])){
+            $limit = ' LIMIT :count';
+            $substituion[':count'] = $data['count'];
+            if (isset($data['offset'])){
+                $limit = ' LIMIT :count,:offset';
+                $substituion[':offset'] = $data['offset'];
+            };
+            $sql .= $limit;
+        };
+        $db = Db::instance();
+        $db->execute($sql, $substituion);
+    }
 }

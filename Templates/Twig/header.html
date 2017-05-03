@@ -17,5 +17,23 @@
 </head>
 <body>
 <header>
-<h1 class="text-center">{{ site.name }}</h1>
+<div class="fluid-container">
+<nav id="header" class="navbar navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a id="imglogo" class="navbar-brand" href="/"><img src="/img/kostroma_46x37.png" /></a>
+          <a class="navbar-brand" href="/">
+            <p id="sitetitle">{{ site.title | upper }}</p>
+            <p id="siteslogan">{{ site.name | lower }}</p>
+          </a>
+        </div>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><img src="/img/drug.png" /><span class="menuitem">Лекарства</span></a></li>
+            <li><a href="#"><img src="/img/pharmacy.png" /><span class="menuitem">Аптеки</span></a></li>
+            <li class="active"><a href="#"><img src="/img/info.png" /><span class="menuitem">О проекте</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+</div>
 </header>
